@@ -10,7 +10,7 @@ em.getRepository(Sector)
 
 async function get_all(req:Request, res:Response){
     try{
-        res.status(201).json({ status: 201, data: await em.find(Sector, {})})
+        res.status(201).json({sectores: await em.find(Sector, {})})
     } catch (error: any) {
         throw500(res)
     }
@@ -44,7 +44,7 @@ async function get_celdas(req: Request, res: Response){
     try {
         const cod_sector = Number.parseInt(req.params.cod_sector) 
         const el_sector = await em.findOneOrFail(Sector, { cod_sector }, {populate: ['celdas']})
-        res.status(201).json({ status: 201, data: el_sector.celdas} )
+        res.status(201).json({ status: 201, celdas: el_sector.celdas} )
     } catch (error: any){
         res.status(404).json({status: 404 })
     }

@@ -38,9 +38,8 @@ async function sanitizar_input_de_actividad(req : Request, res : Response, next:
 }
 
 async function get_all(req:Request, res:Response){
-    try{
-        const actividades = await em.find(Actividad, { estado: true })
-        res.status(201).json({ message: 'las actividades:', data: actividades})
+    try {
+        res.status(201).json({ message: 'las actividades:', data: await em.find(Actividad, { estado: true }) })
     } catch (error: any) {
         res.status(500).json({ message: error.message})
     }
@@ -48,7 +47,7 @@ async function get_all(req:Request, res:Response){
 
 async function get_one(req: Request, res: Response){
     try {
-        const cod_actividad =  Number.parseInt(req.params.cod_actividad)
+        const cod_actividad = Number.parseInt(req.params.cod_actividad)
         const la_actividad = await em.findOneOrFail(Actividad, { cod_actividad: cod_actividad , estado: true}, { populate: ['reclusos'] }) 
         res.status(201).json({ data: la_actividad} )
     } catch (error: any){

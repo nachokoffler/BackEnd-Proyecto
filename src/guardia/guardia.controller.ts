@@ -63,9 +63,9 @@ async function add(req: Request, res: Response){
         const dni =  Number.parseInt(req.body.dni)
         const el_guardia = await em.findOne(Guardia, {dni: req.body.sanitized_input.dni})
         if(el_guardia == null){
-            const elGuardia = await em.create(Guardia, req.body.sanitized_input) 
+            const el_guardia = await em.create(Guardia, req.body.sanitized_input) 
             await em.flush()
-            res.status(201).json({ status: 201 })
+            res.status(201).json({ status: 201, cod_guardia: el_guardia.cod_guardia})
         } else {
             if(el_guardia.esta_activo()){
                 res.status(409).json({status: 409})
@@ -74,8 +74,8 @@ async function add(req: Request, res: Response){
                 el_guardia.fecha_ini_contrato = today
                 el_guardia.fecha_fin_contrato = null
                 await em.flush()
-                res.status(202).json({status: 202})
-            } 
+                res.status(201).json({status: 201, cod_guardia: el_guardia.cod_guardia})
+            }
         }
     } catch (error: any) {
         throw500(res)

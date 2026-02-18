@@ -1,9 +1,9 @@
 import * as v from 'valibot'
 
 const ERR_DIA_RANGE = 'El numero que representa al dia de la semana cuando ocurre la actividad debe estar entre 1 y 7'
-const [NAME_LEN_MIN, NAME_LEN_MAX] = [8, 60]
+const [NAME_LEN_MIN, NAME_LEN_MAX] = [5, 60]
 const [DES_LEN_MIN, DES_LEN_MAX] = [0, 100]
-const [LOC_LEN_MIN, LOC_LEN_MAX] = [10, 70]
+const [LOC_LEN_MIN, LOC_LEN_MAX] = [5, 70]
 const [HORA_MIN, HORA_MAX] = [0, 24]
 const ERR_NAME_LEN = `El nombre de la actividad debe tener entre ${NAME_LEN_MIN} y ${NAME_LEN_MAX} caracteres.`
 const ERR_DES_LEN = `La descripcion de la actividad debe tener entre ${DES_LEN_MIN} y ${DES_LEN_MAX} caracteres.`

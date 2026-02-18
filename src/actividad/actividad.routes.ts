@@ -11,4 +11,3 @@ actividad_router.delete('/:cod_actividad', verificar_token, remove)
 
 
 
-

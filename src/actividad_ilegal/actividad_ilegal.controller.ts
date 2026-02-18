@@ -37,7 +37,7 @@ async function get_all(req:Request, res:Response){
     try{
         const actividades_ilegales = await em.find(Actividad_Ilegal, {})
         if(actividades_ilegales.length > 0){
-            res.status(201).json({ status: 201, data: actividades_ilegales})
+            res.status(201).json({ status: 201, ilegales: actividades_ilegales})
         } else {
             res.status(404).json({ status: 404})
         }
@@ -106,17 +106,17 @@ async function inscripcion(req: Request, res: Response) {
                     if(!actividad_ilegal.reclusos.contains(el_recluso_verdadero)){
                         actividad_ilegal.reclusos.add(el_recluso_verdadero)
                         await em.flush()
-                        res.status(201).json({status: 201, message: 'inscripcion lograda'})
+                        res.status(201).json({status: 201, message: 'Inscripcion lograda'})
                     } else {
-                        res.status(409).json({status: 409, message: 'recluso ya inscripto anteriormente'})
+                        res.status(409).json({status: 409, message: 'El recluso ya inscripto anteriormente'})
                     }
                 } else {
-                    res.status(409).json({status: 409, message: 'no queda lugar disponible'})
+                    res.status(409).json({status: 409, message: 'No hay cupo disponible'})
                 }
             } else {
                 actividad_ilegal.reclusos.add(el_recluso_verdadero)
                 await em.flush()
-                res.status(201).json({status: 201, message: 'inscripcion lograda'})
+                res.status(201).json({status: 201, message: 'Inscripcion lograda'})
             }
         }
         if(el_recluso_verdadero == null) return res.status(404).json({ status: 404 , message: 'recluso no encontrado'})

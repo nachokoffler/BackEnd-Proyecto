@@ -20,7 +20,6 @@ describe("crud de administrador", () => {
       expect(res.status).toBe(401); // Unauthorized
     });
     
-
     it("should return a list of admins", async () => {
         const response = await request(url_base).get("/administradores").set("Authorization", `Bearer ${token}`)
         expect(response.status).toBe(201)
@@ -67,5 +66,3 @@ describe("crud de administrador", () => {
         expect(response.status).toBe(409)
     })
 })
-
-
