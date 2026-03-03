@@ -3,7 +3,6 @@ import { Actividad } from "./actividad.entity.js"
 import { orm } from "../shared/db/orm.js"
 import { get_sector } from "../sector/sector.controller.js"
 import { validar_nueva_actividad } from "./actividad.schema.js"
-import { lazy } from "valibot"
 
 const em = orm.em
 

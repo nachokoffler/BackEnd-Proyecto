@@ -79,7 +79,7 @@ async function add(req: Request, res: Response){
     } catch (error: any) {
         res.status(500).json({message : error.message})
     }
-} //nota: No se puede cambiar a la version en el que se va directamente al create porque se necesita saber si el recluso tiene condena activa.
+} //nota: no se puede cambiar a la version en el que se va directamente al create porque se necesita saber si el recluso tiene condena activa.
 
 async function buscar_recluso(cod_recluso: number){
     return await em.findOne(Recluso, {cod_recluso: cod_recluso})

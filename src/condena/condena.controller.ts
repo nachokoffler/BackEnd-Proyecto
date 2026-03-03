@@ -2,7 +2,7 @@ import { Request, Response, NextFunction} from "express"
 import { orm } from "../shared/db/orm.js"
 import { Condena } from "./condena.entity.js"
 import { Sentencia } from "../sentencia/sentencia.entity.js"
-import { buscar_recluso, get_one } from "../recluso/recluso.controller.js"
+import { buscar_recluso } from "../recluso/recluso.controller.js"
 import { get_sentencias_especificas } from "../sentencia/sentencia.controller.js"
 import { get_sectores_con_sentencia } from "../sector/sector.controller.js"
 import { throw500 } from "../shared/handle_server_side_errors/server_error_handler.js"
@@ -31,7 +31,7 @@ async function sanitizar_input_de_condena(req:Request, res:Response, next: NextF
 
 async function get_all(req:Request, res:Response){
     try{
-        const condenas = await em.find(Condena, {fecha_fin_real: null}, {populate: ['sentencias'], orderBy: {'fecha_ini': 'DESC'}})
+        const condenas = await em.find(Condena, {fecha_fin_real: null}, {populate: ['sentencias'], orderBy: {'fecha_ini': 'ASC'}})
         res.status(201).json({ message: 'las condenas:', data: condenas})
     } catch (error: any) {
         throw500(res)
@@ -67,7 +67,7 @@ async function add(req: Request, res: Response){
             j++
         }
 
-        await em.remove(nueva_condena)
+        em.remove(nueva_condena)
         await em.flush() // esto es en caso de que no se encuentre lugar
         return res.status(409).json({ status: 409 })
 
@@ -107,8 +107,8 @@ async function finalizar_condenas(req:Request, res:Response){
         }
         
         // const qb = em.createQueryBuilder(Condena);
-        // await qb.update({ fecha_fin_real: today}).where({fecha_fin_real: null, fecha_fin_estimada: { $lt: today }}) // si solo se tuviese que dar fin a la condena enteonces se
-        // podria hacer el query builder, pero en este caso tambien se tiene que terminar la estadia del recluso en la celda asi que no se puede
+        // await qb.update({ fecha_fin_real: today}).where({fecha_fin_real: null, fecha_fin_estimada: { $lt: today }}) 
+        // si solo se tuviese que dar fin a la condena entonces se podria hacer el query builder, pero en este caso tambien se tiene que terminar la estadia del recluso en la celda asi que no se puede
         
     } catch (error: any) {
         throw500(res)

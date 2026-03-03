@@ -20,7 +20,7 @@ async function sanitizar_input_de_actividad_ilegal(req : Request, res : Response
 
     for (const key of Object.keys(req.body.sanitized_input)){
         if(req.body.sanitized_input[key] === undefined){
-            return res.status(400).json({ status: 400,  message: `Falta el campo ${key}` });
+            return res.status(400).json({ status: 400, message: `Falta el campo ${key}` });
         }
     }
 
@@ -99,7 +99,6 @@ async function inscripcion(req: Request, res: Response) {
         cod_recluso[0] = Number(req.params.cod_recluso)
         const actividad_ilegal = await em.findOne(Actividad_Ilegal, {cod_act_ilegal: cod_actividad_ilegal[0] }, {populate: ['reclusos']})
         const el_recluso_verdadero = await em.findOne(Recluso, cod_recluso[0])
-        
         if(el_recluso_verdadero != null && actividad_ilegal != null){
             if(actividad_ilegal.reclusos.isInitialized()){
                 if(actividad_ilegal.reclusos.length < actividad_ilegal.cantidad_maxima){
@@ -119,8 +118,8 @@ async function inscripcion(req: Request, res: Response) {
                 res.status(201).json({status: 201, message: 'Inscripcion lograda'})
             }
         }
-        if(el_recluso_verdadero == null) return res.status(404).json({ status: 404 , message: 'recluso no encontrado'})
-        if(actividad_ilegal == null) return res.status(405).json({ status: 405 , message: 'actividad ilegal no encontrada'})
+        if(el_recluso_verdadero == null) return res.status(404).json({ status: 404 , message: 'Recluso no encontrado'})
+        if(actividad_ilegal == null) return res.status(405).json({ status: 405 , message: 'Actividad ilegal no encontrada'})
     } catch (error: any) {
         throw500(res)
     }

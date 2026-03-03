@@ -1,6 +1,5 @@
 import { Cascade, Collection, Entity, OneToMany, PrimaryKey, Property } from "@mikro-orm/core";
 import { Turno } from "../turno/turno.entity.js";
-import { EntityManager } from "@mikro-orm/mysql";
 
 @Entity()
 export class Guardia {

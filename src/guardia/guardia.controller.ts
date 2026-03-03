@@ -90,7 +90,6 @@ async function finalizar_contrato(req: Request, res: Response){
         if(el_guardia != null){
             if(el_guardia.fecha_fin_contrato == null){
                 el_guardia.fecha_fin_contrato = new Date()
-                //el_guardia.desvincular_turnos(em)
                 if(el_guardia.turnos.isInitialized()){
                     await em.remove(el_guardia.turnos.getItems());
                     await em.flush();

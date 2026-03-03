@@ -23,7 +23,7 @@ export class Condena {
     @ManyToMany(() => Sentencia, (sentencia) => sentencia.condenas, { unique : false, nullable : true, owner: true})
     sentencias = new Collection<Sentencia>(this);
 
-    //[PrimaryKeyProp] !: ['cod_recluso', 'fecha_ini']
+    //[PrimaryKeyProp] !: ['cod_recluso', 'fecha_ini'] se agrego cod_condena y esto quedo redundante
     
 }
 
