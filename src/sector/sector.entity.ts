@@ -17,8 +17,8 @@ export class Sector {
     @Property({ nullable: false, unique: false})
     descripcion !: string
     
-    @ManyToMany(() => Sentencia, (sentencia) => sentencia.sectores, { unique : false, nullable : true, cascade: [Cascade.PERSIST], owner: true})
-    sentencias = new Collection<Sentencia>(this);
+    // @ManyToMany(() => Sentencia, (sentencia) => sentencia.sectores, { unique : false, nullable : true, cascade: [Cascade.PERSIST], owner: true})
+    // sentencias = new Collection<Sentencia>(this);  // tambien eliminamos esta relacion para facilitar la creacion de sectores
 
     @OneToMany(() => Celda, (celda) => celda.cod_sector, { unique : false, nullable : true, cascade: [Cascade.ALL]})
     celdas = new Collection<Celda>(this);
@@ -26,22 +26,21 @@ export class Sector {
     @OneToMany(() => Turno, (turno) => turno.cod_sector, {cascade: [Cascade.REMOVE]})
     turnos = new Collection<Turno>(this)
 
-    async agregar_sentencias(unas_sentencias: Sentencia[], em: EntityManager){
-        let i = 0;
-        while (i < unas_sentencias.length) {
-            if(!(this.sentencias.contains(unas_sentencias[i]))){
-                this.sentencias.add(unas_sentencias[i])
-                await em.flush();
-                i++
-            } else {
-                unas_sentencias.splice(i, 1)
-            }
-        }
-        return unas_sentencias
-    }
+    // async agregar_sentencias(unas_sentencias: Sentencia[], em: EntityManager){
+    //     let i = 0;
+    //     while (i < unas_sentencias.length) {
+    //         if(!(this.sentencias.contains(unas_sentencias[i]))){
+    //             this.sentencias.add(unas_sentencias[i])
+    //             await em.flush();
+    //             i++
+    //         } else {
+    //             unas_sentencias.splice(i, 1)
+    //         }
+    //     }
+    //     return unas_sentencias
+    // }
 
     async conseguir_reclusos_con_edad(edad_minima: number){
-        
         let c = 0
         let reclusos_habiles : any[] = []
         while(c < this.celdas.length){
@@ -55,7 +54,6 @@ export class Sector {
     }
     
     async encarcelar_recluso(un_recluso: Recluso, em: EntityManager){
-
         let c = 0
         while(c < this.celdas.length){
             let la_celda = await this.celdas[c].encarcelar_recluso(un_recluso, em)

@@ -31,8 +31,8 @@ export const orm = await MikroORM.init<MySqlDriver>(config);
 
 export const syncSchema = async() => {
     const generator = orm.getSchemaGenerator()
-    //await generator.dropSchema()  // solo en las etapa de desarrollo
-    //await generator.createSchema()  // solo en las etapa de desarrollo
+    // await generator.dropSchema()  // solo en las etapa de desarrollo
+    // await generator.createSchema()  // solo en las etapa de desarrollo
     await generator.updateSchema()
 }
 

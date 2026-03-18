@@ -16,13 +16,13 @@ async function get_all(req:Request, res:Response){
 }
 
 async function get_sector(cod_sector: number) {
-    return await em.findOne(Sector, { cod_sector }, {populate: ['celdas', 'sentencias', 'turnos.cod_guardia']})
+    return await em.findOne(Sector, { cod_sector }, {populate: ['celdas', 'turnos.cod_guardia']})
 }
 
 async function get_one(req: Request, res: Response){
     try {
         const cod_sector =  Number.parseInt(req.params.cod_sector) 
-        const el_sector = await em.findOne(Sector, { cod_sector: cod_sector }, {populate: ['celdas', 'sentencias', 'turnos']})
+        const el_sector = await em.findOne(Sector, { cod_sector: cod_sector }, {populate: ['celdas', 'turnos']})
         if(el_sector){
             res.status(201).json({ status: 201, data: el_sector})
         } else {
@@ -33,11 +33,11 @@ async function get_one(req: Request, res: Response){
     }
 }
 
-async function get_sectores_con_sentencia(la_sentencia: Sentencia){
-    const sectores = await em.find(Sector, { sentencias: { cod_sentencia: la_sentencia.cod_sentencia } }, {populate: ['celdas']});
-    console.log(sectores)
-    return sectores
-}
+// async function get_sectores_con_sentencia(la_sentencia: Sentencia){
+//     const sectores = await em.find(Sector, { sentencias: { cod_sentencia: la_sentencia.cod_sentencia } }, {populate: ['celdas']});
+//     console.log(sectores)
+//     return sectores
+// }
 
 async function get_celdas(req: Request, res: Response){
     try {
@@ -49,5 +49,5 @@ async function get_celdas(req: Request, res: Response){
     }
 }
 
-export { get_all, get_one, get_celdas, get_sector, get_sectores_con_sentencia }
+export { get_all, get_one, get_celdas, get_sector}
 

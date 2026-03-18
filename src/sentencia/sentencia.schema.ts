@@ -23,16 +23,16 @@ const duracion_anios = v.pipe(
     v.integer()
 )
 
-const orden_de_gravedad = v.pipe(
-    v.number(),
-    v.integer()
-)
+// const orden_de_gravedad = v.pipe(
+//     v.number(),
+//     v.integer()
+// )
 
 const sentencia_schema = v.object({
     nombre: nombre,
     descripcion: descripcion,
     duracion_anios: duracion_anios,
-    orden_de_gravedad: orden_de_gravedad
+    // orden_de_gravedad: orden_de_gravedad
 })
 
 export const validar_nueva_sentencia = v.safeParserAsync(sentencia_schema)

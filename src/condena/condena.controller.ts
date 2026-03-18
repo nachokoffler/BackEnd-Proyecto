@@ -4,9 +4,9 @@ import { Condena } from "./condena.entity.js"
 import { Sentencia } from "../sentencia/sentencia.entity.js"
 import { buscar_recluso } from "../recluso/recluso.controller.js"
 import { get_sentencias_especificas } from "../sentencia/sentencia.controller.js"
-import { get_sectores_con_sentencia } from "../sector/sector.controller.js"
 import { throw500 } from "../shared/handle_server_side_errors/server_error_handler.js"
 import { Recluso } from "../recluso/recluso.entity.js"
+import { Sector } from "../sector/sector.entity.js"
 
 const em = orm.em
 
@@ -52,23 +52,29 @@ async function add(req: Request, res: Response){
         await em.assign(nueva_condena, la_fecha_estimada)
         await em.flush()
 
-        let la_sentencia_maxima: Sentencia = mis_sentencias[0]
-        let i = 1
-        while(i < mis_sentencias.length){
-            if(mis_sentencias[i].orden_de_gravedad > la_sentencia_maxima.orden_de_gravedad) la_sentencia_maxima = mis_sentencias[i]
+        // let la_sentencia_maxima: Sentencia = mis_sentencias[0]
+        // let i = 1
+        // while(i < mis_sentencias.length){
+        //     if(mis_sentencias[i].orden_de_gravedad > la_sentencia_maxima.orden_de_gravedad) la_sentencia_maxima = mis_sentencias[i]
+        //     i++
+        // }
+        // let los_sectores = await get_sectores_con_sentencia(la_sentencia_maxima)
+        // let j = 0
+        //     if(la_celda != null) return res.status(201).json({ status: 201, celda: la_celda})
+        //     j++
+        // }
+
+        let la_celda = null;
+        const count = await orm.em.count(Sector)
+        let i = 1;
+        while(i <= count){
+            let [elSector] = await orm.em.find(Sector, {cod_sector: i})
+            la_celda = await elSector.encarcelar_recluso(nueva_condena.cod_recluso, em)
+            if(la_celda != null) return res.status(201).json({ status: 201, celda: la_celda, fecha_fin_estimada: la_fecha_estimada})
             i++
         }
-        let los_sectores = await get_sectores_con_sentencia(la_sentencia_maxima)
 
-        let j = 0
-        while(j < los_sectores.length){
-            let la_celda = await los_sectores[j].encarcelar_recluso(nueva_condena.cod_recluso, em)
-            if(la_celda != null) return res.status(201).json({ status: 201, celda: la_celda})
-            j++
-        }
-
-        em.remove(nueva_condena)
-        await em.flush() // esto es en caso de que no se encuentre lugar
+        em.removeAndFlush(nueva_condena)
         return res.status(409).json({ status: 409 })
 
     } catch (error: any) {
@@ -80,7 +86,6 @@ async function add(req: Request, res: Response){
 async function finalizar_condenas(req:Request, res:Response){
     try{
         const today = new Date()
-        
         const condenas = await em.find(Condena, {fecha_fin_real: null, fecha_fin_estimada: { $lt: today }}, { populate: ['cod_recluso'] })
         if(condenas.length != 0){
             let reclusos: Recluso[] = []

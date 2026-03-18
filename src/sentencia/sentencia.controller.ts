@@ -29,7 +29,7 @@ async function sanitizar_input_de_sentencia(req: Request, res: Response, next: N
 
 async function get_all(req : Request, res : Response){
     try{
-        const sentencias = await em.find(Sentencia, {}, { orderBy: {'orden_de_gravedad': 'ASC'}})
+        const sentencias = await em.find(Sentencia, {}, { orderBy: {'cod_sentencia': 'ASC'}})
         if(sentencias.length != null){
             res.status(201).json({ status: 201, data: sentencias})
         } else {
@@ -58,13 +58,13 @@ async function get_one(req: Request, res: Response){
 
 async function add(req: Request, res: Response){
     try{
-        const sentencia_con_mismo_orden_gravedad_o_nombre = await em.findOne(Sentencia, { $or: [{orden_de_gravedad: req.body.sanitized_input.orden_de_gravedad}, {nombre: req.body.sanitized_input.nombre}]})
+        const sentencia_con_mismo_orden_gravedad_o_nombre = await em.findOne(Sentencia, { nombre: req.body.sanitized_input.nombre})
         if(sentencia_con_mismo_orden_gravedad_o_nombre == null){
             const la_sentencia = await em.create(Sentencia, req.body.sanitized_input)
             await em.flush()
             return res.status(201).json({status: 201, message: 'sentencia creada'})
-        } else if(sentencia_con_mismo_orden_gravedad_o_nombre.orden_de_gravedad == req.body.sanitized_input.orden_de_gravedad) {
-            return res.status(409).json({status: 409, message: 'orden de gravedad concuerda con uno ya en existencia.'})
+        // } else if(sentencia_con_mismo_orden_gravedad_o_nombre.orden_de_gravedad == req.body.sanitized_input.orden_de_gravedad) {
+        //     return res.status(409).json({status: 409, message: 'orden de gravedad concuerda con uno ya en existencia.'})
         } else if(sentencia_con_mismo_orden_gravedad_o_nombre.nombre == req.body.sanitized_input.nombre) {
             return res.status(409).json({status: 410, message: 'nombre concuerda con uno ya en existencia.'})
         }
