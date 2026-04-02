@@ -6,7 +6,7 @@ import { Celda } from "../celda/celda.entity.js";
 
 @Entity()
 export class Recluso {
-    @PrimaryKey({ nullable: false, unique: true})
+    @PrimaryKey({ nullable: false, unique: true, autoincrement: true})
     cod_recluso !: number
     
     @Property({ nullable: false})
@@ -25,7 +25,7 @@ export class Recluso {
     actividades = new Collection<Actividad>(this)
 
     @ManyToMany(() => Actividad_Ilegal, (act_ilegal) => act_ilegal.reclusos, { unique : false, nullable : true, owner: false})
-    actividades_ilegales = new Collection<Actividad_Ilegal>(this);
+    actividades_ilegales = new Collection<Actividad_Ilegal>(this)
 
     @OneToMany(() => Condena, (condena) => condena.cod_recluso, { unique : false, nullable : true })
     condenas = new Collection<Condena>(this)

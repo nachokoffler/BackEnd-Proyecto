@@ -1,6 +1,6 @@
 import * as v from 'valibot'
 
-const [NAME_LEN_MIN, NAME_LEN_MAX] = [8, 100]
+const [NAME_LEN_MIN, NAME_LEN_MAX] = [5, 100]
 const [DES_LEN_MIN, DES_LEN_MAX] = [0, 200]
 const ERR_NAME_LEN = `El nombre de la sentencia debe tener entre ${NAME_LEN_MIN} y ${NAME_LEN_MAX} caracteres.`
 const ERR_DES_LEN = `La descripcion de la sentencia debe tener entre ${DES_LEN_MIN} y ${DES_LEN_MAX} caracteres.`

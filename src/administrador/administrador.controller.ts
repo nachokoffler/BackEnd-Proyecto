@@ -110,5 +110,20 @@ async function get_one(req: Request, res: Response){
     }
 }
 
-export { get_all, get_one, log_in_jwt, add, sanitizar_input_de_administrador }
+async function remove(req: Request, res: Response){
+    try {
+        const cod_administrador = Number.parseInt(req.params.cod_administrador) 
+        const el_admin = await em.findOne(Administrador, { cod_administrador })
+        if(el_admin != null){
+            await em.removeAndFlush(el_admin);
+            res.status(200).json({  status: 200 } )
+        } else {
+            res.status(404).json({  status: 404 })
+        }
+    } catch (error: any){
+        throw500(res)
+    }
+}
+
+export { get_all, get_one, log_in_jwt, add, sanitizar_input_de_administrador, remove }
 

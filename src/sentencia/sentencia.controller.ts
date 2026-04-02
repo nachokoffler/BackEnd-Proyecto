@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from "express"
 import { orm } from "../shared/db/orm.js"
 import { Sentencia } from "./sentencia.entity.js"
 import { validar_nueva_sentencia } from "./sentencia.schema.js"
+import { throw500 } from "../shared/handle_server_side_errors/server_error_handler.js"
 
 const em = orm.em
 em.getRepository(Sentencia)
@@ -10,8 +11,7 @@ async function sanitizar_input_de_sentencia(req: Request, res: Response, next: N
     req.body.sanitized_input = {
         nombre: req.body.nombre,
         descripcion: req.body.descripcion, 
-        duracion_anios: req.body.duracion_anios,
-        orden_de_gravedad: req.body.orden_de_gravedad
+        duracion_anios: req.body.duracion_anios
     }
 
     for (const key of Object.keys(req.body.sanitized_input)) {
@@ -39,7 +39,6 @@ async function get_all(req : Request, res : Response){
         res.status(404).json({ message: 'error'})
     }
 }
-
  
 async function get_one(req: Request, res: Response){
     try {
@@ -66,7 +65,7 @@ async function add(req: Request, res: Response){
         // } else if(sentencia_con_mismo_orden_gravedad_o_nombre.orden_de_gravedad == req.body.sanitized_input.orden_de_gravedad) {
         //     return res.status(409).json({status: 409, message: 'orden de gravedad concuerda con uno ya en existencia.'})
         } else if(sentencia_con_mismo_orden_gravedad_o_nombre.nombre == req.body.sanitized_input.nombre) {
-            return res.status(409).json({status: 410, message: 'nombre concuerda con uno ya en existencia.'})
+            return res.status(409).json({status: 409, message: 'nombre concuerda con uno ya en existencia.'})
         }
     } catch (error: any) {
         res.status(500).json({message : error}) 
@@ -81,5 +80,19 @@ async function get_sentencias_especificas(cod_sentencias: number[]){
     return await em.find(Sentencia, { cod_sentencia: {$in: cod_sentencias} })
 }
 
-export { get_all, get_one, add, get_sentencia, get_sentencias_especificas, sanitizar_input_de_sentencia }
+async function remove(req: Request, res: Response){
+    try {
+        const cod_sentencia = Number.parseInt(req.params.cod_sentencia)
+        const la_sentencia = await em.findOne(Sentencia, { cod_sentencia })
+        if(la_sentencia != null){
+            await em.removeAndFlush(la_sentencia);
+            res.status(200).json({  status: 200 } )
+        } else {
+            res.status(404).json({  status: 404 })
+        }
+    } catch (error: any){
+        throw500(res)
+    }
+}
 
+export { get_all, get_one, add, get_sentencia, get_sentencias_especificas, sanitizar_input_de_sentencia, remove }

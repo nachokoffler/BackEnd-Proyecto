@@ -33,6 +33,23 @@ async function get_one(req: Request, res: Response){
     }
 }
 
+async function crear_sector(req: Request, res: Response){
+    try{
+        const la_sector = await em.create(Sentencia, req.body.sanitized_input)
+        const sentencia_con_mismo_orden_gravedad_o_nombre = await em.findOne(Sentencia, { nombre: req.body.sanitized_input.nombre})
+        if(sentencia_con_mismo_orden_gravedad_o_nombre == null){
+            const la_sentencia = await em.create(Sentencia, req.body.sanitized_input)
+            await em.flush()
+            return res.status(201).json({status: 201, message: 'sentencia creada'})
+        } else if(sentencia_con_mismo_orden_gravedad_o_nombre.nombre == req.body.sanitized_input.nombre) {
+            return res.status(409).json({status: 410, message: 'nombre concuerda con uno ya en existencia.'})
+        }
+    } catch (error: any) {
+        res.status(500).json({message : error}) 
+    }
+}
+
+
 // async function get_sectores_con_sentencia(la_sentencia: Sentencia){
 //     const sectores = await em.find(Sector, { sentencias: { cod_sentencia: la_sentencia.cod_sentencia } }, {populate: ['celdas']});
 //     console.log(sectores)
@@ -49,5 +66,5 @@ async function get_celdas(req: Request, res: Response){
     }
 }
 
-export { get_all, get_one, get_celdas, get_sector}
+export { get_all, get_one, get_celdas, get_sector, crear_sector}
 

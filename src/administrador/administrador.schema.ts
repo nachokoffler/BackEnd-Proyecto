@@ -1,12 +1,12 @@
 import * as v from 'valibot'
 
-const [NOM_APE_MIN_LEN, NOM_APE_MAX_LEN] = [1, 40]
-const [CONTRA_MIN_LEN, CONTRA_MAX_LEN] = [6, 50]
-const ERR_NOM_LEN = `El nombre del recluso debe tener entre ${NOM_APE_MIN_LEN} y ${NOM_APE_MAX_LEN} caracteres.`
-const ERR_APE_LEN = `El apellido del recluso debe tener entre ${NOM_APE_MIN_LEN} y ${NOM_APE_MAX_LEN} caracteres.`
-const ERR_CONTRA_LEN = `El nombre del recluso debe tener entre ${CONTRA_MIN_LEN} y ${CONTRA_MAX_LEN} caracteres.`
+const [NOM_APE_MIN_LEN, NOM_APE_MAX_LEN] = [1, 50]
+const [CONTRA_MIN_LEN, CONTRA_MAX_LEN] = [1, 50]
+const ERR_NOM_LEN = `El nombre del administrador debe tener entre ${NOM_APE_MIN_LEN} y ${NOM_APE_MAX_LEN} caracteres.`
+const ERR_APE_LEN = `El apellido del administrador debe tener entre ${NOM_APE_MIN_LEN} y ${NOM_APE_MAX_LEN} caracteres.`
+const ERR_CONTRA_LEN = `El nombre del administrador debe tener entre ${CONTRA_MIN_LEN} y ${CONTRA_MAX_LEN} caracteres.`
 const ERR_BAD_PASS = 'La contrasenia debe ser compuesta por al menos una letra y un numero.'
-const ERR_ONLY_LETTERS_AND_NUMBERS = 'Solo se permiten letras y numeros tanto en el apellido como en el nombre del recluso.'
+const ERR_ONLY_LETTERS_AND_NUMBERS = 'Solo se permiten letras y numeros tanto en el apellido como en el nombre del administrador.'
 const ERR_VAL = 'no se permiten dnis que superen 100000000'
 
 const nombre = v.nonNullable(

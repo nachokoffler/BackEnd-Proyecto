@@ -45,6 +45,16 @@ async function get_all(req:Request, res:Response){
     }
 }
 
+async function get_some(req:Request, res:Response){
+    try{
+        let busqueda = req.params.busqueda
+        const reclusos = await em.find(Recluso, { nombre: { $like: `%${busqueda}%` }, });
+        res.status(201).json({ status: 201, data: reclusos})
+    } catch (error: any) {
+        res.status(404).json({ status: 404 })
+    }
+}
+
 async function get_one(req: Request, res: Response){
     try {
         const dni = Number.parseInt(req.params.dni)
@@ -86,5 +96,5 @@ async function buscar_recluso(cod_recluso: number){
 
 }
 
-export { get_all, get_one, add, sanitizar_input_de_recluso, buscar_recluso }
+export { get_all, get_one, add, sanitizar_input_de_recluso, buscar_recluso, get_some}
 

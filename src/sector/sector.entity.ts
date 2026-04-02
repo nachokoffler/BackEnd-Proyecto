@@ -11,11 +11,11 @@ export class Sector {
     @PrimaryKey({ nullable: false, unique: true})
     cod_sector !: number
 
-    @Property({ nullable: false, unique: true})
-    nombre !: string
+    // @Property({ nullable: false, unique: true})
+    // nombre !: string
 
-    @Property({ nullable: false, unique: false})
-    descripcion !: string
+    // @Property({ nullable: false, unique: false})
+    // descripcion !: string
     
     // @ManyToMany(() => Sentencia, (sentencia) => sentencia.sectores, { unique : false, nullable : true, cascade: [Cascade.PERSIST], owner: true})
     // sentencias = new Collection<Sentencia>(this);  // tambien eliminamos esta relacion para facilitar la creacion de sectores
