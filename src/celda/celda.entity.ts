@@ -27,7 +27,6 @@ export class Celda {
         let reclusos_habiles : any[] | null = []
         const today = new Date()
         await this.reclusos.loadItems()
-        console.log(this.reclusos)
         if(this.reclusos.isInitialized()){
             while(r < this.reclusos.length){
                 let anios = today.getFullYear() - this.reclusos[r].fecha_nac.getFullYear();

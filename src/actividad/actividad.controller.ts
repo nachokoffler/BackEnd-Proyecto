@@ -44,11 +44,18 @@ async function get_all(req:Request, res:Response){
     }
 }
 
+async function get_some(req:Request, res:Response){
+    try{
+        res.status(201).json({ status: 201, data: await em.find(Actividad, { nombre: { $like: `%${req.params.nombre}%` } })})
+    } catch (error: any) {
+        res.status(404).json({ status: 404 })
+    }
+}
+
 async function get_one(req: Request, res: Response){
     try {
         const cod_actividad = Number.parseInt(req.params.cod_actividad)
-        const la_actividad = await em.findOneOrFail(Actividad, { cod_actividad: cod_actividad , estado: true}, { populate: ['reclusos'] }) 
-        res.status(201).json({ data: la_actividad} )
+        res.status(201).json({ data: await em.findOneOrFail(Actividad, { cod_actividad: cod_actividad , estado: true}, { populate: ['reclusos'] }) } )
     } catch (error: any){
         res.status(404).json({ status: 404})
     }
@@ -89,5 +96,5 @@ async function remove(req: Request, res: Response) {
     }
 }
 
-export { get_all, get_one, add, remove, sanitizar_input_de_actividad }
+export { get_all, get_one, add, remove, sanitizar_input_de_actividad, get_some }
 

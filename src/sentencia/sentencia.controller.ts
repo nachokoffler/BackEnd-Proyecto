@@ -72,12 +72,35 @@ async function add(req: Request, res: Response){
     }
 }
 
+async function get_some(req:Request, res:Response){
+    try{
+        res.status(201).json({ status: 201, data: await em.find(Sentencia, { nombre: { $like: `%${req.params.nombre}%` } }) })
+    } catch (error: any) {
+        res.status(404).json({ status: 404 })
+    }
+}
+
 async function get_sentencia(cod_sentencia: number){
     return await em.findOne(Sentencia, { cod_sentencia: cod_sentencia })
 }
 
 async function get_sentencias_especificas(cod_sentencias: number[]){
     return await em.find(Sentencia, { cod_sentencia: {$in: cod_sentencias} })
+}
+
+async function update(req: Request, res: Response){
+    try{
+        const unaSentencia = await em.findOne(Sentencia, { nombre: req.body.sanitized_input.nombre})
+        if(unaSentencia == null){
+            //await em.modify(Sentencia, req.body.sanitized_input)
+            await em.flush()
+            return res.status(201).json({status: 201, message: 'sentencia modificada'})
+        } else if(unaSentencia.nombre == req.body.sanitized_input.nombre) {
+            return res.status(409).json({status: 409, message: 'nombre concuerda con uno ya en existencia.'})
+        }
+    } catch (error: any) {
+        res.status(500).json({message : error}) 
+    }
 }
 
 async function remove(req: Request, res: Response){
@@ -95,4 +118,4 @@ async function remove(req: Request, res: Response){
     }
 }
 
-export { get_all, get_one, add, get_sentencia, get_sentencias_especificas, sanitizar_input_de_sentencia, remove }
+export { get_all, get_one, add, get_sentencia, get_sentencias_especificas, sanitizar_input_de_sentencia, remove, update }

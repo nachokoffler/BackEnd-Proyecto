@@ -47,8 +47,13 @@ async function get_all(req:Request, res:Response){
 
 async function get_some(req:Request, res:Response){
     try{
-        let busqueda = req.params.busqueda
-        const reclusos = await em.find(Recluso, { nombre: { $like: `%${busqueda}%` }, });
+        const reclusos = await em.find(Recluso, {
+            $or: [
+                { nombre: { $like: `%${req.params.nombre}%` } },
+                { apellido: { $like: `%${req.params.apellido}%` } },
+            ],
+        });
+        await em.populate(reclusos, ['celda']);
         res.status(201).json({ status: 201, data: reclusos})
     } catch (error: any) {
         res.status(404).json({ status: 404 })

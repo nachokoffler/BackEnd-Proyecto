@@ -60,6 +60,14 @@ async function get_one(req: Request, res: Response){
     }
 }
 
+async function get_some(req:Request, res:Response){
+    try{
+        res.status(201).json({ status: 201, data: await em.find(Actividad_Ilegal, { nombre: { $like: `%${req.params.nombre}%` } })})
+    } catch (error: any) {
+        res.status(404).json({ status: 404 })
+    }
+}
+
 async function add(req: Request, res: Response){
     try{
         const la_act_ilegal = await em.findOne(Actividad_Ilegal, {dia_de_la_semana: req.body.dia_de_la_semana, hora_inicio: req.body.hora_inicio, hora_fin: req.body.hora_fin })
@@ -80,7 +88,7 @@ async function remove(req: Request, res: Response) {
         const cod_actividad : any[] = [];
         cod_actividad[0] = Number(req.params.cod_act_ilegal)
         const la_actividad_verdadera = await em.findOne(Actividad_Ilegal, {cod_act_ilegal: cod_actividad[0] })
-        if(la_actividad_verdadera === null) {
+        if(la_actividad_verdadera == null) {
             res.status(404).json({status: 404, message: 'actividad ilegal no encontrada'})
         } else {
             await em.removeAndFlush(la_actividad_verdadera)
@@ -125,7 +133,7 @@ async function inscripcion(req: Request, res: Response) {
     }
 }
 
-export { get_all, get_one, add, inscripcion, sanitizar_input_de_actividad_ilegal, remove}
+export { get_all, get_one, add, inscripcion, sanitizar_input_de_actividad_ilegal, remove, get_some }
 
 
 

@@ -1,5 +1,4 @@
-import { Entity, PrimaryKey, Property, ManyToMany, Cascade, OneToMany, ConstraintViolationException } from "@mikro-orm/core";
-import { Sentencia } from "../sentencia/sentencia.entity.js";
+import { Entity, PrimaryKey, Property, ManyToMany, Cascade, OneToMany } from "@mikro-orm/core";
 import { Collection } from "@mikro-orm/core";
 import { Celda } from "../celda/celda.entity.js";
 import { Recluso } from "../recluso/recluso.entity.js";
@@ -52,7 +51,7 @@ export class Sector {
         }
         return reclusos_habiles
     }
-    
+
     async encarcelar_recluso(un_recluso: Recluso, em: EntityManager){
         let c = 0
         while(c < this.celdas.length){
@@ -65,5 +64,6 @@ export class Sector {
     }
     
 }
+
 
 
