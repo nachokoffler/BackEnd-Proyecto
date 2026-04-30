@@ -58,6 +58,21 @@ async function get_guardia(cod_guardia: number) { // esta busqueda es por codigo
     return el_guardia
 }
 
+async function get_some(req:Request, res:Response){
+    try{
+        const guardias = await em.find(Guardia, {
+            $or: [
+                { nombre: { $like: `%${req.params.nombre}%` } },
+                { apellido: { $like: `%${req.params.apellido}%` } },
+            ],
+            fecha_fin_contrato: null
+        });
+        res.status(201).json({ status: 201, data: guardias})
+    } catch (error: any) {
+        res.status(404).json({ status: 404 })
+    }
+}
+
 async function add(req: Request, res: Response){
     try{
         const dni =  Number.parseInt(req.body.dni)
@@ -107,7 +122,7 @@ async function finalizar_contrato(req: Request, res: Response){
     }
 }
 
-export { get_all, get_one, add, finalizar_contrato, get_guardia, sanitizar_input_de_guardia}
+export { get_all, get_one, add, finalizar_contrato, get_guardia, sanitizar_input_de_guardia, get_some}
 
 
 

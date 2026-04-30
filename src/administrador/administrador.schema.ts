@@ -45,25 +45,39 @@ const dni = v.nonNullable(
 )
 
 
-const contrasenia = v.nonNullable(
+// const contrasenia = v.nonNullable(
+//     v.pipe(
+//         v.string(),
+//         v.minLength(CONTRA_MIN_LEN, ERR_CONTRA_LEN),
+//         v.maxLength(CONTRA_MAX_LEN, ERR_CONTRA_LEN),
+//         v.regex(
+//             /^(?=.*[a-zA-Z])(?=.*\d).+$/,
+//             ERR_BAD_PASS
+//         )
+//     ),
+//     'contrasenia no puede ser nula'
+// )
+
+const email = v.nonNullable( 
     v.pipe(
         v.string(),
-        v.minLength(CONTRA_MIN_LEN, ERR_CONTRA_LEN),
-        v.maxLength(CONTRA_MAX_LEN, ERR_CONTRA_LEN),
+        v.minLength(NOM_APE_MIN_LEN, ERR_APE_LEN),
+        v.maxLength(NOM_APE_MAX_LEN, ERR_APE_LEN),
         v.regex(
-            /^(?=.*[a-zA-Z])(?=.*\d).+$/,
-            ERR_BAD_PASS
+            /^[a-zA-Z0-9]*$/,
+            ERR_ONLY_LETTERS_AND_NUMBERS
         )
     ),
-    'contrasenia no puede ser nula'
+    'apellido no puede ser nulo'
 )
 
 const admin_schema = v.object({
     nombre: nombre,
     apellido: apellido,
     dni: dni,
-    contrasenia: contrasenia,
-    es_especial: v.boolean()
+    //contrasenia: contrasenia,
+    es_especial: v.boolean(),
+    email: email
 })
 
 export const validar_incoming_administrador = v.safeParserAsync(admin_schema)
