@@ -11,7 +11,7 @@ POST http://localhost:8080/administradores/logIn
 Content-Type: application/json
 
 {
-    "cod_administrador": 8,
+    "cod_administrador": 1,
     "contrasenia": "123r"
 }
 

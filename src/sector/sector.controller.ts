@@ -49,7 +49,6 @@ async function crear_sector(req: Request, res: Response){
     }
 }
 
-
 // async function get_sectores_con_sentencia(la_sentencia: Sentencia){
 //     const sectores = await em.find(Sector, { sentencias: { cod_sentencia: la_sentencia.cod_sentencia } }, {populate: ['celdas']});
 //     console.log(sectores)

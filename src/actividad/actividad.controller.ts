@@ -6,6 +6,7 @@ import { validar_nueva_actividad } from "./actividad.schema.js"
 
 const em = orm.em
 
+
 async function sanitizar_input_de_actividad(req : Request, res : Response, next: NextFunction){
     req.body.sanitized_input = {
         nombre: req.body.nombre,

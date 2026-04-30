@@ -36,13 +36,3 @@ export const syncSchema = async() => {
     await generator.updateSchema()
 }
 
-
-
-
-
-
-
-
-
-
-
