@@ -13,7 +13,7 @@ const name = process.env.db_name
 const config = {
     entities: ['dist/**/*.entity.js'],
     entitiesTs: ['src/**/*.entity.ts'],
-    dbName: 'libertant',
+    dbName: 'libertadnt',
     clientUrl: `mysql://${user}:${passwd}@${host}:${port}/${name}`,
     highlighter: new SqlHighlighter(),
     allowedGlobalContext: true,
@@ -35,4 +35,5 @@ export const syncSchema = async() => {
     // await generator.createSchema()  // solo en las etapa de desarrollo
     await generator.updateSchema()
 }
+
 

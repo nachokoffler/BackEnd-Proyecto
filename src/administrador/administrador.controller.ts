@@ -130,7 +130,7 @@ async function log_in_jwt(req: Request, res: Response){
         const cod_administrador = Number.parseInt(req.body.cod_administrador) 
         const el_admin = await em.findOne(Administrador, { cod_administrador })
         if(el_admin == null) return res.status(404).json({ status: 404 } )
-        if(el_admin.cod_administrador == 1){
+        if(el_admin.cod_administrador == 8){
             const token = jwt.sign({
                 cod_administrador: el_admin.cod_administrador,
                 nombre: el_admin.nombre,
@@ -139,7 +139,7 @@ async function log_in_jwt(req: Request, res: Response){
                 contrasenia: el_admin.contrasenia,
                 es_especial: el_admin.es_especial
             }, JWT_SECRET, {expiresIn: '3h'})
-            res.status(201).json({status: 201, token: token, es_especial: el_admin.es_especial})
+            return res.status(201).json({status: 201, token: token, es_especial: el_admin.es_especial})
         }
         if(!(await bcrypt.compare(req.body.contrasenia, el_admin.contrasenia))) return res.status(409).json({ status: 409})
         
