@@ -78,7 +78,7 @@ async function add(req: Request, res: Response){
             token_expiry
         })
         await em.flush()
-
+        
         const link = `${FRONTEND_URL}/completar-registro?token=${registration_token}`
         await transporter.sendMail({
             from: `"Libertand't" <${GMAIL_USER}>`,
@@ -93,8 +93,9 @@ async function add(req: Request, res: Response){
             `
         })
 
-        res.status(201).json({ status: 201, message: "Administrador creado correctamente, este debe establecer su contraseña."})
+        return res.status(201).json({ status: 201, message: "Administrador creado correctamente, este debe establecer su contraseña."})
     } catch (error: any){
+        console.log(error.message)
         throw500(res)
     }
 }
