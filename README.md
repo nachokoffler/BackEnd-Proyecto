@@ -22,10 +22,10 @@ GMAIL_USER=email <- \
 GMAIL_APP_PASSWORD=contraseniaGmailDeApp <- \
 FRONTEND_URL=http://localhost:4200 \
 Modifica de manera obligatoria los campos marcados. en el caso de GMAIL_APP_PASSWORD, tienes que activar una contraseña especial para el uso automatico del mail, para eso tenes que:
-1- ir a myaccount.google.com
-2- habilitar verificacion de 2 pasos
-3- buscar en la barra de busqueda 'App Passwords' y crear una contraseña con la etiqueta 'libertadnt'.
-4- copia la contraseña creada en GMAIL_APP_PASSWORD y asegurate de usar el mismo mail con el que creaste la contraseña en GMAIL_USER.
+1- ir a myaccount.google.com \
+2- habilitar verificacion de 2 pasos \
+3- buscar en la barra de busqueda 'App Passwords' y crear una contraseña con la etiqueta 'libertadnt'. \
+4- copia la contraseña creada en GMAIL_APP_PASSWORD y asegurate de usar el mismo mail con el que creaste la contraseña en GMAIL_USER. \
 
 Luego tienes que tener montado un servidor MySQL en el puerto 3306 preferiblemente. recomendamos establecer el servidor MySQL usando MySQL Workbench.
 
