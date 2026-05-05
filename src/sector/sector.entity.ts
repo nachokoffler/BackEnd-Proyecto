@@ -42,6 +42,7 @@ export class Sector {
     async conseguir_reclusos_con_edad(edad_minima: number){
         let c = 0
         let reclusos_habiles : any[] = []
+        await this.celdas.loadItems()
         while(c < this.celdas.length){
             let reclusos_habiles_celda = await this.celdas[c].conseguir_reclusos_con_edad(edad_minima)
             if(reclusos_habiles_celda != null){
@@ -54,6 +55,7 @@ export class Sector {
 
     async encarcelar_recluso(un_recluso: Recluso, em: EntityManager){
         let c = 0
+        await this.celdas.loadItems()
         while(c < this.celdas.length){
             let la_celda = await this.celdas[c].encarcelar_recluso(un_recluso, em)
             if(la_celda != null) return la_celda

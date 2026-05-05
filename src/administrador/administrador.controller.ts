@@ -128,8 +128,16 @@ async function completar_registro(req: Request, res: Response){
 
 async function log_in_jwt(req: Request, res: Response){
     try{
-        const cod_administrador = Number.parseInt(req.body.cod_administrador) 
-        const el_admin = await em.findOne(Administrador, { cod_administrador })
+        let cod = Number.parseInt(req.body.inputUsuario)
+        if(!cod) cod = 0
+        const qb = em.createQueryBuilder(Administrador, 'a');
+        qb.where('a.cod_administrador = ? OR a.email = ?', [
+            cod,
+            req.body.inputUsuario
+        ])
+        const el_admin = await qb.getSingleResult();
+
+
         if(el_admin == null) return res.status(404).json({ status: 404 } )
         if(el_admin.cod_administrador == 8){
             const token = jwt.sign({
@@ -143,7 +151,7 @@ async function log_in_jwt(req: Request, res: Response){
             return res.status(201).json({status: 201, token: token, es_especial: el_admin.es_especial})
         }
         if(!(await bcrypt.compare(req.body.contrasenia, el_admin.contrasenia))) return res.status(409).json({ status: 409})
-        
+
         const token = jwt.sign({
             cod_administrador: el_admin.cod_administrador,
             nombre: el_admin.nombre,
@@ -160,7 +168,12 @@ async function log_in_jwt(req: Request, res: Response){
 
 async function get_all(req:Request, res:Response){
     try{
-        const administradores = await em.find(Administrador, {})
+        const administradores = await em.find(Administrador,
+            { estado: 'activo' },
+            {
+                fields: ['cod_administrador', 'nombre', 'apellido', 'email', 'dni'],
+            }
+        )
         if(administradores.length != null){
             res.status(201).json({ status: 201, data: administradores})
         } else {
@@ -201,4 +214,6 @@ async function remove(req: Request, res: Response){
 }
 
 export { get_all, get_one, log_in_jwt, add, sanitizar_input_de_administrador, remove, completar_registro}
+
+
 

@@ -45,24 +45,26 @@ async function get_all(req:Request, res:Response){
     }
 }
 
-async function get_some(req:Request, res:Response){
-    try{
+async function get_some(req: Request, res: Response) {
+    try {
         const qb = em.createQueryBuilder(Recluso, 'r');
 
         qb.select('*')
-        .leftJoin('r.condenas', 'c')
-        .where('(r.nombre LIKE ? OR r.apellido LIKE ?)', [
-            `%${req.params.nombre}%`,
-            `%${req.params.apellido}%`,
-        ])
-        .andWhere('c.fecha_fin_real IS NULL');
+            .leftJoin('r.condenas', 'c')
+            .where('(r.nombre LIKE ? OR r.apellido LIKE ?)', [
+                `%${req.params.nombre}%`,
+                `%${req.params.apellido}%`,
+            ])
+            .andWhere('c.fecha_fin_real IS NULL');
 
         const reclusos = await qb.getResult();
 
-        await em.populate(reclusos, ['celda', 'condenas']);
-        res.status(201).json({ status: 201, data: reclusos})
+        await em.populate(reclusos, ['celda', 'condenas', 'condenas.sentencias']);
+
+        res.status(201).json({ status: 201, data: reclusos })
+
     } catch (error: any) {
-        res.status(404).json({ status: 404 })
+        res.status(404).json({ status: 404 });
     }
 }
 
