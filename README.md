@@ -8,19 +8,19 @@ Uso:
 crea un carpeta en tu computadora, ejecuta git init y luego git remote add origin https://github.com/utnfrrodsw/desarrollo-de-software.git.
 Luego ejecuta pnpm install.
 
-Tambien vas a tener que crear un archivo .env en el directorio principal.
+Tambien vas a tener que crear un archivo .env en el directorio principal. \
 db_user=nombreUsuario <- \
-db_passwd=contra <-
-db_host=127.0.0.1
-db_port=3306
-db_name=libertadnt
-server_port=3000
-JWT_SECRET="4265#%mkj68u7"
-SALT_ROUNDS=10
-production_port=3000
-GMAIL_USER=email <-
-GMAIL_APP_PASSWORD=contraseniaGmailDeApp <-
-FRONTEND_URL=http://localhost:4200
+db_passwd=contra <- \
+db_host=127.0.0.1 \
+db_port=3306 \
+db_name=libertadnt \
+server_port=3000 \
+JWT_SECRET="4265#%mkj68u7" \
+SALT_ROUNDS=10 \
+production_port=3000 \
+GMAIL_USER=email <- \
+GMAIL_APP_PASSWORD=contraseniaGmailDeApp <- \
+FRONTEND_URL=http://localhost:4200 \
 Modifica de manera obligatoria los campos marcados. en el caso de GMAIL_APP_PASSWORD, tienes que activar una contraseña especial para el uso automatico del mail, para eso tenes que:
 1- ir a myaccount.google.com
 2- habilitar verificacion de 2 pasos
