@@ -9,7 +9,7 @@ crea un carpeta en tu computadora, ejecuta git init y luego git remote add origi
 Luego ejecuta pnpm install.
 
 Tambien vas a tener que crear un archivo .env en el directorio principal.
-db_user=nombreUsuario <-
+db_user=nombreUsuario <- \n
 db_passwd=contra <-
 db_host=127.0.0.1
 db_port=3306
