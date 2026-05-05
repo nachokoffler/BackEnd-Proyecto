@@ -33,4 +33,4 @@ Para comenzar a usar el servidor backend, ejecute 'pnpm start:dev' en la termina
 
 Finalmente, ejecute el script de MySQL en workbench para tener datos de prueba y poder utilizar el sistema con varios datos cargados (puede encontrar el script la carpeta de drive).
 
-Use el usuario {codigo: 1, contraseña: 123r} para usar las capacidades de nivel de acceso especial y {codigo: 2, contraseña: 123r} para el nivel de acceso 2.
+Use el usuario {codigo: 1, contraseña: 123r} para usar las capacidades de nivel de acceso especial y {codigo: 2, contraseña: 123r} para el nivel de acceso normal.
