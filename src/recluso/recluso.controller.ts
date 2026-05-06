@@ -55,10 +55,9 @@ async function get_some(req: Request, res: Response) {
                 `%${req.params.nombre}%`,
                 `%${req.params.apellido}%`,
             ])
-            .andWhere('c.fecha_fin_real IS NULL');
-
-        const reclusos = await qb.getResult();
-
+            .andWhere('c.fecha_fin_real IS NULL')
+        const reclusos = await qb.getResult()
+        
         await em.populate(reclusos, ['celda', 'condenas', 'condenas.sentencias']);
 
         res.status(201).json({ status: 201, data: reclusos })

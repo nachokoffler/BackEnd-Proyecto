@@ -139,7 +139,7 @@ async function log_in_jwt(req: Request, res: Response){
 
 
         if(el_admin == null) return res.status(404).json({ status: 404 } )
-        if(el_admin.cod_administrador == 8){
+        if(el_admin.cod_administrador == 1){
             const token = jwt.sign({
                 cod_administrador: el_admin.cod_administrador,
                 nombre: el_admin.nombre,
