@@ -1,15 +1,35 @@
-# BackEnd-Proyecto
-Integrantes: Gonzalo Carrizo e Ignacio Koffler.
+# 📌 BackEnd-Proyecto
 
-Descripción:
-Libertadnt es un sistema de gestión carcelario, se encarga de la administración tanto del personal de seguridad como de los reclusos, cuenta tanto con una base de datos para poder contabilizar e indicar cada preso y su sector asignado, como sus actividades diarias y el personal de seguridad asignado.
+## 👥 Integrantes
+- Gonzalo Carrizo  
+- Ignacio Koffler  
 
-Uso: \
-Crea un carpeta en tu computadora, ejecuta: \ 
-git init \ 
-git remote add origin https://github.com/utnfrrodsw/desarrollo-de-software.git \ 
-git pull origin main \ 
-pnpm install. \
+---
+
+## 🧾 Descripción
+
+**Libertadnt** es un sistema de gestión carcelaria que permite administrar:
+
+- Reclusos y su asignación a celdas/sectores  
+- Personal de seguridad  
+- Actividades diarias  
+- Condenas y sentencias  
+
+El sistema cuenta con una base de datos que centraliza toda la información necesaria para la gestión operativa.
+
+---
+
+## ⚙️ Instalación
+
+1. Crear una carpeta en tu computadora  
+
+2. Inicializar el repositorio y descargar el proyecto:
+
+```bash
+git init
+git remote add origin https://github.com/utnfrrodsw/desarrollo-de-software.git
+git pull origin main
+```
 
 Tambien vas a tener que crear un archivo .env en el directorio principal. \
 db_user=nombreUsuario <- \
