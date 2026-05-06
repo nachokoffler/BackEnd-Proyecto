@@ -9,7 +9,7 @@ Crea un carpeta en tu computadora, ejecuta: \
 git init \ 
 git remote add origin https://github.com/utnfrrodsw/desarrollo-de-software.git \ 
 git pull origin main \ 
-pnpm install.
+pnpm install. \
 
 Tambien vas a tener que crear un archivo .env en el directorio principal. \
 db_user=nombreUsuario <- \
