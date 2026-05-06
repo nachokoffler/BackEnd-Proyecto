@@ -58,31 +58,30 @@ Para comenzar a usar el servidor backend, ejecute 'pnpm start:dev' en la termina
 Finalmente, ejecute el script de MySQL en workbench para tener datos de prueba y poder utilizar el sistema con varios datos cargados (puede encontrar el script la carpeta de drive).
 
 Use el usuario {codigo: 1, contraseña: 123r} para usar las capacidades de nivel de acceso especial y {codigo: 2, contraseña: 123r} para el nivel de acceso normal.
-
 # Deploy Backend con ngrok — Libertand't
 
 ## Requisitos previos
 - Tener una cuenta en [ngrok](https://ngrok.com) (plan gratuito alcanza)
 - Tener el backend corriendo con `pnpm`
-- Tener ngrok instalado en WSL
+- Tener ngrok instalado en Windows
 
 ---
 
-## 1. Instalar ngrok en WSL
+## 1. Instalar ngrok en Windows
 
-```bash
-curl -sSL https://ngrok-agent.s3.amazonaws.com/ngrok.asc | sudo tee /etc/apt/trusted.gpg.d/ngrok.asc >/dev/null
-echo "defs https://ngrok-agent.s3.amazonaws.com/apt buster main" | sudo tee /etc/apt/sources.list.d/ngrok.list
-sudo apt update && sudo apt install ngrok
+Descargarlo desde [ngrok.com/download](https://ngrok.com/download) e instalarlo, o con winget desde PowerShell:
+
+```powershell
+winget install ngrok.ngrok
 ```
 
 ---
 
 ## 2. Autenticar ngrok
 
-Obtené tu token en [dashboard.ngrok.com/get-started/your-authtoken](https://dashboard.ngrok.com/get-started/your-authtoken) y corré:
+Obtené tu token en [dashboard.ngrok.com/get-started/your-authtoken](https://dashboard.ngrok.com/get-started/your-authtoken) y corré en PowerShell:
 
-```bash
+```powershell
 ngrok config add-authtoken tu_token_aqui
 ```
 
@@ -92,16 +91,16 @@ Solo hace falta hacerlo una vez.
 
 ## 3. Levantar el backend y ngrok
 
-En **dos terminales WSL separadas**:
+En **dos terminales separadas**:
 
-**Terminal 1 — iniciar el backend:**
+**Terminal 1 (WSL) — iniciar el backend:**
 ```bash
 cd /path/to/backend
 pnpm run dev
 ```
 
-**Terminal 2 — exponer con ngrok:**
-```bash
+**Terminal 2 (PowerShell) — exponer con ngrok:**
+```powershell
 ngrok http 3000
 ```
 
