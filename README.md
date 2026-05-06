@@ -29,6 +29,7 @@ El sistema cuenta con una base de datos que centraliza toda la información nece
 git init
 git remote add origin https://github.com/utnfrrodsw/desarrollo-de-software.git
 git pull origin main
+pnpm install
 ```
 
 Tambien vas a tener que crear un archivo .env en el directorio principal. \
@@ -48,7 +49,7 @@ Modifica de manera obligatoria los campos marcados. En el caso de GMAIL_APP_PASS
 1- Ir a myaccount.google.com \
 2- Habilitar verificacion de 2 pasos \
 3- Buscar en la barra de busqueda 'App Passwords' y crear una contraseña con la etiqueta 'libertadnt'. \
-4- Copia la contraseña creada en GMAIL_APP_PASSWORD y asegurate de usar el mismo mail con el que creaste la contraseña en GMAIL_USER. \
+4- Copia la contraseña creada en GMAIL_APP_PASSWORD y asegurate de usar el mismo mail con el que creaste la contraseña en GMAIL_USER. 
 
 Luego tienes que tener montado un servidor MySQL en el puerto 3306 preferiblemente. Recomendamos establecer el servidor MySQL usando MySQL Workbench.
 
